@@ -1,0 +1,5 @@
+{
+  "name": "Hive King of the Hill",
+  "description": "A web-based implementation of the Hive board game featuring local multiplayer logic, hexagonal grid system, and complete movement rules for all standard pieces (Queen, Ant, Beetle, Spider, Grasshopper).",
+  "requestFramePermissions": []
+}
