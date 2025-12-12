@@ -68,7 +68,7 @@ const Board: React.FC<BoardProps> = ({ gameState, onHexClick }) => {
   };
 
   return (
-    <div className="w-full h-full bg-slate-800 overflow-hidden relative shadow-inner">
+    <div className="w-full h-full bg-stone-900 overflow-hidden relative shadow-inner">
       <svg
         ref={svgRef}
         viewBox={`${viewBox.x} ${viewBox.y} ${viewBox.w} ${viewBox.h}`}
@@ -81,7 +81,7 @@ const Board: React.FC<BoardProps> = ({ gameState, onHexClick }) => {
       >
         <defs>
           <pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse">
-             <circle cx="1" cy="1" r="1" className="fill-slate-700" />
+             <circle cx="1" cy="1" r="1" className="fill-stone-800" />
           </pattern>
         </defs>
         <rect x={viewBox.x} y={viewBox.y} width={viewBox.w} height={viewBox.h} fill="url(#grid)" />
@@ -108,7 +108,7 @@ const Board: React.FC<BoardProps> = ({ gameState, onHexClick }) => {
           );
         })}
       </svg>
-      <div className="absolute bottom-4 left-4 text-xs text-slate-500 pointer-events-none">
+      <div className="absolute bottom-4 left-4 text-xs text-stone-600 pointer-events-none">
         Controls: Drag to Pan, Scroll to Zoom
       </div>
     </div>

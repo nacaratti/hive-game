@@ -9,7 +9,8 @@
       "Bash(netstat:*)",
       "Bash(findstr:*)",
       "Bash(ls:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(npx tsc:*)"
     ]
   }
 }

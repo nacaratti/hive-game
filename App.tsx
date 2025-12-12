@@ -8,30 +8,50 @@ import {
 } from './game/logic';
 import { hexToString, stringToHex } from './game/utils';
 import Board from './components/Board';
-import { Play, RotateCcw, User, Clock, Trophy, Hexagon as HexIcon, Users, Unplug, BookOpen, X } from 'lucide-react';
+import { Play, RotateCcw, User, Clock, Trophy, Hexagon as HexIcon, Users, Unplug, BookOpen, X, Volume2, VolumeX } from 'lucide-react';
 
-const SOCKET_URL = 'http://localhost:3000';
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'http://localhost:3000';
 
 // --- Helper Components ---
 
-const HexButton = ({ type, count, selected, onClick, disabled, label, isOpponent }: any) => {
+const HexButton = ({ type, count, selected, onClick, disabled, label, isOpponent, playerColor }: any) => {
+  // Determine piece color based on player
+  const isWhitePlayer = playerColor === PlayerColor.WHITE;
+
+  // Liquid glass effect with gradient backgrounds
+  const pieceStyle = isWhitePlayer
+    ? 'bg-gradient-to-b from-white via-slate-50 to-slate-200'
+    : 'bg-gradient-to-b from-zinc-800 via-black to-zinc-900';
+
+  const pieceBorder = isWhitePlayer ? 'border-stone-300' : 'border-stone-700';
+  const pieceTextColor = isWhitePlayer ? 'text-black' : 'text-white';
+
   return (
     <div className={`relative flex flex-col items-center justify-center ${isOpponent ? 'scale-75 opacity-60' : 'hover:scale-105'} transition-all duration-200`}>
       <button
         onClick={onClick}
         disabled={disabled || count === 0}
-        style={{ clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)' }}
+        style={{
+          clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)',
+          filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))'
+        }}
         className={`
-          w-16 h-14 flex items-center justify-center border
-          ${selected 
-            ? 'bg-amber-600 text-white border-amber-400 shadow-[0_0_15px_rgba(245,158,11,0.6)]' 
-            : 'bg-stone-800 text-stone-400 border-stone-700 hover:bg-stone-700'}
+          w-16 h-14 flex items-center justify-center border relative overflow-hidden
+          ${pieceStyle} ${pieceTextColor}
+          ${selected
+            ? 'border-white border-2 shadow-[0_0_15px_rgba(255,255,255,0.8)]'
+            : pieceBorder}
           ${(disabled || count === 0) ? 'opacity-30 grayscale cursor-not-allowed' : 'cursor-pointer'}
         `}
       >
-        <span className="text-2xl z-10 filter drop-shadow-md">{label}</span>
+        {/* Glass shine effect */}
+        <div
+          className="absolute inset-0 bg-gradient-to-b from-white/40 via-white/10 to-transparent pointer-events-none"
+          style={{ clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)' }}
+        />
+        <span className="text-2xl z-10 filter drop-shadow-md relative">{label}</span>
       </button>
-      
+
       <div className="absolute -bottom-1 bg-black px-1.5 rounded-full text-[10px] font-bold text-stone-400 border border-stone-700 z-20">
         x{count}
       </div>
@@ -39,12 +59,12 @@ const HexButton = ({ type, count, selected, onClick, disabled, label, isOpponent
   );
 };
 
-const PlayerHand = ({ player, isActive, isBottom, selectedPiece, onSelect }: { player: PlayerState, isActive: boolean, isBottom: boolean, selectedPiece: BugType | null, onSelect: (t: BugType) => void }) => {
+const PlayerHand = ({ player, isActive, isBottom, selectedPiece, onSelect, playerColor }: { player: PlayerState, isActive: boolean, isBottom: boolean, selectedPiece: BugType | null, onSelect: (t: BugType) => void, playerColor: PlayerColor }) => {
   if (!player || !player.hand) return null;
   return (
     <div className={`flex gap-3 p-4 bg-transparent ${!isBottom ? 'flex-row-reverse' : ''}`}>
        {Object.entries(player.hand).map(([type, count]) => (
-          <HexButton 
+          <HexButton
             key={type}
             label={
               type === BugType.QUEEN ? '🐝' :
@@ -55,8 +75,9 @@ const PlayerHand = ({ player, isActive, isBottom, selectedPiece, onSelect }: { p
             count={count}
             selected={selectedPiece === type}
             onClick={() => onSelect(type as BugType)}
-            disabled={!isBottom || !isActive} 
+            disabled={!isBottom || !isActive}
             isOpponent={!isBottom}
+            playerColor={playerColor}
           />
        ))}
     </div>
@@ -69,7 +90,18 @@ export default function App() {
   const [socket, setSocket] = useState<Socket | null>(null);
   const [view, setView] = useState<'LOBBY' | 'GAME'>('LOBBY');
   const [nickname, setNickname] = useState('');
-  
+
+  // Security: Client-side nickname sanitization (matches server validation)
+  const sanitizeNickname = (value: string): string => {
+    // Remove HTML tags and special characters
+    let clean = value.replace(/[<>'"&]/g, '');
+    // Allow only alphanumeric, spaces, hyphens, and underscores
+    clean = clean.replace(/[^a-zA-Z0-9\s\-_]/g, '');
+    // Limit to 20 characters
+    clean = clean.substring(0, 20);
+    return clean.trim();
+  };
+
   // Local State mapped from Server
   const [gameState, setGameState] = useState<GameState | null>(null);
   const [myColor, setMyColor] = useState<PlayerColor | null>(null);
@@ -83,6 +115,8 @@ export default function App() {
   const [validMoves, setValidMoves] = useState<string[]>([]);
   const [opponentIsBot, setOpponentIsBot] = useState(false);
   const [showRules, setShowRules] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     const s = io(SOCKET_URL);
@@ -250,41 +284,37 @@ export default function App() {
     setValidMoves([]);
   };
 
-  const isSurrounded = (hex: string, board: BoardMap) => {
-     const [q, r] = hex.split(',').map(Number);
-     const dirs = [[1,0], [1,-1], [0,-1], [-1,0], [-1,1], [0,1]];
-     let occupied = 0;
-     dirs.forEach(([dq, dr]) => {
-        const nKey = `${q+dq},${r+dr}`;
-        if (board.has(nKey)) occupied++;
-     });
-     return occupied === 6;
-  };
+  // REMOVIDO: Verificação de vitória agora é feita 100% no servidor
+  // O servidor verifica automaticamente após cada movimento via checkVictoryCondition()
 
-  // Check Win Condition locally to send signal to server (Distributed authority for simplicity)
-  // Ideally server checks this, but we'll do it here to trigger the 'GAME_OVER' event
+  // Audio management
   useEffect(() => {
-    if (!gameState || gameState.winner || !isMyTurn) return;
-    
-    let whiteQ: string | null = null;
-    let blackQ: string | null = null;
-    
-    gameState.board.forEach((cell, key) => {
-       if (cell.stack.some(p => p.type === BugType.QUEEN && p.color === PlayerColor.WHITE)) whiteQ = key;
-       if (cell.stack.some(p => p.type === BugType.QUEEN && p.color === PlayerColor.BLACK)) blackQ = key;
-    });
-
-    const wLost = whiteQ ? isSurrounded(whiteQ, gameState.board) : false;
-    const bLost = blackQ ? isSurrounded(blackQ, gameState.board) : false;
-
-    if (wLost && bLost) {
-       socket?.emit('game_action', { type: 'GAME_OVER', winner: 'DRAW' });
-    } else if (wLost) {
-       socket?.emit('game_action', { type: 'GAME_OVER', winner: 'BLACK' });
-    } else if (bLost) {
-       socket?.emit('game_action', { type: 'GAME_OVER', winner: 'WHITE' });
+    if (!audioRef.current) {
+      // Cria elemento de audio com música lo-fi do YouTube (via proxy ou link direto)
+      // Usando faixa de domínio público / Creative Commons
+      const audio = new Audio('https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3'); // Lo-fi alternativa
+      audio.loop = true;
+      audio.volume = 0.3; // Volume baixo
+      audioRef.current = audio;
     }
-  }, [gameState?.board, isMyTurn]);
+
+    if (!isMuted && view === 'GAME') {
+      audioRef.current.play().catch(() => {
+        // Browser pode bloquear autoplay, usuário precisa interagir primeiro
+      });
+    } else {
+      audioRef.current.pause();
+    }
+
+    return () => {
+      audioRef.current?.pause();
+    };
+  }, [isMuted, view]);
+
+  // Toggle mute
+  const toggleMute = () => {
+    setIsMuted(!isMuted);
+  };
 
   // --- Render ---
 
@@ -306,13 +336,13 @@ export default function App() {
           )}
 
           <div className="space-y-6">
-            <input 
-              type="text" 
+            <input
+              type="text"
               value={nickname}
-              onChange={(e) => setNickname(e.target.value)}
+              onChange={(e) => setNickname(sanitizeNickname(e.target.value))}
               className="w-full bg-black border border-stone-700 rounded-xl p-4 text-white focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none transition-all placeholder:text-stone-700 font-bold text-center uppercase tracking-widest"
               placeholder="ENTER CALLSIGN"
-              maxLength={12}
+              maxLength={20}
             />
             <button
               onClick={() => {
@@ -347,13 +377,13 @@ export default function App() {
     );
   }
 
-  if (!gameState) return <div className="h-screen bg-black flex items-center justify-center text-stone-500">Loading Game State...</div>;
+  if (!gameState) return <div className="h-screen bg-stone-900 flex items-center justify-center text-stone-500">Loading Game State...</div>;
 
   const whitePlayer = gameState.players[PlayerColor.WHITE];
   const blackPlayer = gameState.players[PlayerColor.BLACK];
 
   return (
-    <div className="relative h-screen w-screen bg-black overflow-hidden font-sans select-none text-stone-200">
+    <div className="relative h-screen w-screen bg-stone-900 overflow-hidden font-sans select-none text-stone-200">
       
       {/* 1. Board Layer */}
       <div className="absolute inset-0 z-0">
@@ -365,41 +395,41 @@ export default function App() {
 
       {/* 2. Top HUD: Opponent */}
       <div className="absolute top-0 left-0 right-0 p-4 z-10 pointer-events-none flex flex-col items-center gap-4">
-          <div className="flex items-center gap-8 text-stone-400 text-sm font-bold bg-black/60 backdrop-blur-md px-8 py-3 rounded-full border border-stone-800 shadow-2xl pointer-events-auto">
-             
+          <div className="flex items-center gap-8 text-stone-300 text-sm font-bold px-8 py-3 pointer-events-auto">
+
              {/* Black Player (Left side of HUD) */}
              <div className="flex items-center gap-3">
-                 <div className={`w-3 h-3 rounded-full ${gameState.currentPlayer === PlayerColor.BLACK ? 'bg-amber-500 animate-pulse' : 'bg-stone-800'}`} />
-                 <span className={`${gameState.currentPlayer === PlayerColor.BLACK ? 'text-white' : ''} ${myColor === PlayerColor.BLACK ? 'text-amber-400' : ''}`}>
+                 <div className={`w-3 h-3 rounded-full ${gameState.currentPlayer === PlayerColor.BLACK ? 'bg-amber-500 animate-pulse shadow-[0_0_8px_rgba(245,158,11,0.8)]' : 'bg-stone-700'}`} />
+                 <span className={`${gameState.currentPlayer === PlayerColor.BLACK ? 'text-white font-extrabold' : ''} ${myColor === PlayerColor.BLACK ? 'text-amber-400' : ''}`}>
                     {blackPlayer ? blackPlayer.nickname : 'Waiting...'}
-                    {blackPlayer?.wins > 0 && <span className="ml-2 text-xs bg-stone-800 px-1.5 py-0.5 rounded text-amber-500">🏆 {blackPlayer.wins}</span>}
-                    {blackPlayer?.isBot && <span className="ml-2 text-xs bg-purple-900/50 px-2 py-0.5 rounded text-purple-300 border border-purple-800">BOT</span>}
+                    {blackPlayer?.wins > 0 && <span className="ml-2 text-xs bg-stone-800/80 px-2 py-0.5 rounded text-amber-400">🏆 {blackPlayer.wins}</span>}
+                    {blackPlayer?.isBot && <span className="ml-2 text-xs bg-purple-900/30 px-2 py-0.5 rounded text-purple-300 border border-purple-700/30">BOT</span>}
                  </span>
              </div>
 
              {/* Timer */}
-             <div className={`font-mono text-2xl w-12 text-center ${timeLeft < 10 ? 'text-red-500' : 'text-stone-200'}`}>
+             <div className={`font-mono text-3xl w-16 text-center font-bold ${timeLeft < 10 ? 'text-red-400 animate-pulse' : 'text-stone-100'}`}>
                 {timeLeft}
              </div>
 
              {/* White Player */}
              <div className="flex items-center gap-3">
-                 <span className={`${gameState.currentPlayer === PlayerColor.WHITE ? 'text-white' : ''} ${myColor === PlayerColor.WHITE ? 'text-amber-400' : ''}`}>
+                 <span className={`${gameState.currentPlayer === PlayerColor.WHITE ? 'text-white font-extrabold' : ''} ${myColor === PlayerColor.WHITE ? 'text-amber-400' : ''}`}>
                     {whitePlayer ? whitePlayer.nickname : 'Waiting...'}
-                    {whitePlayer?.wins > 0 && <span className="ml-2 text-xs bg-stone-800 px-1.5 py-0.5 rounded text-amber-500">🏆 {whitePlayer.wins}</span>}
-                    {whitePlayer?.isBot && <span className="ml-2 text-xs bg-purple-900/50 px-2 py-0.5 rounded text-purple-300 border border-purple-800">BOT</span>}
+                    {whitePlayer?.wins > 0 && <span className="ml-2 text-xs bg-stone-800/80 px-2 py-0.5 rounded text-amber-400">🏆 {whitePlayer.wins}</span>}
+                    {whitePlayer?.isBot && <span className="ml-2 text-xs bg-purple-900/30 px-2 py-0.5 rounded text-purple-300 border border-purple-700/30">BOT</span>}
                  </span>
-                 <div className={`w-3 h-3 rounded-full ${gameState.currentPlayer === PlayerColor.WHITE ? 'bg-amber-500 animate-pulse' : 'bg-stone-800'}`} />
+                 <div className={`w-3 h-3 rounded-full ${gameState.currentPlayer === PlayerColor.WHITE ? 'bg-amber-500 animate-pulse shadow-[0_0_8px_rgba(245,158,11,0.8)]' : 'bg-stone-700'}`} />
              </div>
           </div>
 
           {/* Opponent Hand Display */}
           <div className="pointer-events-auto">
              {myColor === PlayerColor.WHITE && blackPlayer && (
-                 <PlayerHand player={blackPlayer} isActive={gameState.currentPlayer === PlayerColor.BLACK} isBottom={false} selectedPiece={null} onSelect={()=>{}} />
+                 <PlayerHand player={blackPlayer} isActive={gameState.currentPlayer === PlayerColor.BLACK} isBottom={false} selectedPiece={null} onSelect={()=>{}} playerColor={PlayerColor.BLACK} />
              )}
              {myColor === PlayerColor.BLACK && whitePlayer && (
-                 <PlayerHand player={whitePlayer} isActive={gameState.currentPlayer === PlayerColor.WHITE} isBottom={false} selectedPiece={null} onSelect={()=>{}} />
+                 <PlayerHand player={whitePlayer} isActive={gameState.currentPlayer === PlayerColor.WHITE} isBottom={false} selectedPiece={null} onSelect={()=>{}} playerColor={PlayerColor.WHITE} />
              )}
              {/* Spectator View */}
              {!myColor && whitePlayer && (
@@ -415,6 +445,15 @@ export default function App() {
         title="Game Rules"
       >
         <BookOpen size={20} />
+      </button>
+
+      {/* Mute Button */}
+      <button
+        onClick={toggleMute}
+        className="absolute top-6 left-20 z-20 pointer-events-auto bg-stone-900/70 hover:bg-stone-800/90 backdrop-blur-md p-2 rounded-lg transition-all text-stone-400 hover:text-stone-200"
+        title={isMuted ? "Unmute Music" : "Mute Music"}
+      >
+        {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
       </button>
 
       {/* 3. Queue (Top Right) */}
@@ -454,6 +493,7 @@ export default function App() {
                  isBottom={true}
                  selectedPiece={selectedPiece}
                  onSelect={handleHandClick}
+                 playerColor={myColor}
                />
             )}
           </div>

@@ -21,6 +21,7 @@ export const hexNeighbor = (hex: Hex, direction: number): Hex => {
   return hexAdd(hex, directions[direction % 6]);
 };
 
+
 export const getNeighbors = (hex: Hex): Hex[] => {
   const neighbors: Hex[] = [];
   for (let i = 0; i < 6; i++) {

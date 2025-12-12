@@ -41,13 +41,13 @@ const HexagonComponent: React.FC<HexProps> = ({
   // Render Logic for Black vs White pieces
   if (piece) {
     if (piece.color === PlayerColor.WHITE) {
-      fillColor = 'fill-stone-100'; // White piece
-      strokeColor = 'stroke-stone-400';
-      strokeWidth = 2;
+      fillColor = 'fill-white'; // White player = White piece
+      strokeColor = 'stroke-stone-300';
+      strokeWidth = 1;
     } else {
-      fillColor = 'fill-stone-950'; // Black piece
-      strokeColor = 'stroke-stone-600';
-      strokeWidth = 2;
+      fillColor = 'fill-black'; // Black player = Black piece
+      strokeColor = 'stroke-stone-700';
+      strokeWidth = 1;
     }
   }
 
@@ -69,15 +69,48 @@ const HexagonComponent: React.FC<HexProps> = ({
     strokeWidth = 3;
   }
 
-  // Text color needs to be opposite of piece color
+  // Text color: black for white pieces, white for black pieces
   const textColor = piece?.color === PlayerColor.WHITE ? 'fill-black' : 'fill-white';
 
+  // Liquid glass effect ID (unique per piece)
+  const glassId = `glass-${q}-${r}`;
+  const shineId = `shine-${q}-${r}`;
+
   return (
-    <g 
-      transform={`translate(${x}, ${y})`} 
-      onClick={onClick} 
+    <g
+      transform={`translate(${x}, ${y})`}
+      onClick={onClick}
       className="cursor-pointer transition-all duration-200 hover:opacity-90"
     >
+      <defs>
+        {/* Liquid glass gradient for white pieces */}
+        <linearGradient id={`${glassId}-white`} x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#ffffff" stopOpacity="1" />
+          <stop offset="50%" stopColor="#f8fafc" stopOpacity="0.95" />
+          <stop offset="100%" stopColor="#e2e8f0" stopOpacity="0.9" />
+        </linearGradient>
+
+        {/* Liquid glass gradient for black pieces */}
+        <linearGradient id={`${glassId}-black`} x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#1a1a1a" stopOpacity="1" />
+          <stop offset="50%" stopColor="#000000" stopOpacity="0.95" />
+          <stop offset="100%" stopColor="#0a0a0a" stopOpacity="0.9" />
+        </linearGradient>
+
+        {/* Glass shine overlay */}
+        <radialGradient id={shineId}>
+          <stop offset="0%" stopColor="#ffffff" stopOpacity="0.4" />
+          <stop offset="60%" stopColor="#ffffff" stopOpacity="0.1" />
+          <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
+        </radialGradient>
+
+        {/* Glass blur filter */}
+        <filter id={`blur-${glassId}`}>
+          <feGaussianBlur in="SourceGraphic" stdDeviation="0.3" />
+        </filter>
+      </defs>
+
+      {/* Base hexagon with liquid glass fill */}
       <polygon
         points={`
           ${size * Math.sqrt(3) / 2},${-size / 2}
@@ -87,17 +120,34 @@ const HexagonComponent: React.FC<HexProps> = ({
           ${-size * Math.sqrt(3) / 2},${-size / 2}
           0,${-size}
         `}
-        className={`${fillColor} ${strokeColor}`}
+        fill={piece ? (piece.color === PlayerColor.WHITE ? `url(#${glassId}-white)` : `url(#${glassId}-black)`) : fillColor}
+        className={!piece ? fillColor : ''}
+        stroke={strokeColor}
         strokeWidth={strokeWidth}
+        style={{ filter: piece ? 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))' : undefined }}
       />
-      
+
+      {/* Glass shine effect overlay */}
       {piece && (
-        <text 
-          x="0" 
-          y={size * 0.2} 
-          textAnchor="middle" 
-          fontSize={size} 
-          className={`${textColor} select-none pointer-events-none font-bold filter drop-shadow-sm`}
+        <ellipse
+          cx="0"
+          cy={-size / 3}
+          rx={size / 2}
+          ry={size / 3}
+          fill={`url(#${shineId})`}
+          opacity="0.6"
+          style={{ pointerEvents: 'none' }}
+        />
+      )}
+
+      {piece && (
+        <text
+          x="0"
+          y={size * 0.2}
+          textAnchor="middle"
+          fontSize={size}
+          className={`${textColor} select-none pointer-events-none font-bold`}
+          style={{ filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.2))' }}
         >
           {getLabel(piece.type)}
         </text>
