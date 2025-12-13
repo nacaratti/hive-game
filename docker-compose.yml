@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  hive-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hive-backend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS:-*}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    networks:
+      - hive-network
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Nginx como proxy reverso (opcional, mas recomendado)
+  nginx:
+    image: nginx:alpine
+    container_name: hive-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - hive-backend
+    networks:
+      - hive-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  hive-network:
+    driver: bridge
