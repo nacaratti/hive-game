@@ -79,7 +79,7 @@ Fica em `/jogar` na página de download. Não usa servidor: o robô roda no nave
 ```bash
 npm run build-web -w @hive/site
 ```
-Gera a versão em `apps/site/public/jogar/`. Para publicar a página e o jogo, faça login uma vez com `npx vercel@latest login` e rode `npm run deploy -w @hive/site`.
+Gera a versão em `apps/site/public/jogar/`. A Vercel publica a página e o jogo sozinha a cada push na `main` do GitHub, usando o `vercel.json` da raiz (instalação completa, `build-web` e a pasta `apps/site/public`).
 
 ## Publicar uma nova versão do instalador
 
