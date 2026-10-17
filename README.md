@@ -86,9 +86,12 @@ Gera a versão em `apps/site/public/jogar/`. Para publicar a página e o jogo, f
 O instalador fica nas [Releases do GitHub](https://github.com/nacaratti/hive-game/releases), e o botão do site aponta para `https://github.com/nacaratti/hive-game/releases/latest/download/Hive-Pro-Setup.exe`, que sempre entrega a versão mais recente. Depois de subir a versão em `apps/desktop/package.json` e rodar `npm run dist`:
 
 ```bash
-gh release create v0.2.0 "apps/desktop/release/Hive Pro Setup 0.2.0.exe#Hive-Pro-Setup.exe" --title "Hive Pro 0.2.0"
+cp "apps/desktop/release/Hive Pro Setup 0.2.0.exe" Hive-Pro-Setup.exe
 ```
-O asset precisa se chamar `Hive-Pro-Setup.exe` para o link do site continuar funcionando.
+```bash
+gh release create v0.2.0 Hive-Pro-Setup.exe --title "Hive Pro 0.2.0"
+```
+O arquivo precisa se chamar exatamente `Hive-Pro-Setup.exe` para o link do site continuar funcionando (o sufixo `#nome` do `gh` muda só o rótulo, não o nome do arquivo).
 
 ## App Android
 
