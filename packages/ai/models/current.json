@@ -1,0 +1,10 @@
+{
+  "queenPressure": [0, 6, 18, 40, 85, 180],
+  "activePiece": { "Q": 6, "S": 5, "B": 9, "G": 6, "A": 11, "M": 10, "L": 8, "P": 7 },
+  "pinnedFactor": 0.35,
+  "handFactor": 0.55,
+  "attacker": 4,
+  "queenCovered": 45,
+  "mobility": 0.6,
+  "queenInHand": 25
+}

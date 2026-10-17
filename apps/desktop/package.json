@@ -1,0 +1,55 @@
+{
+  "name": "@hive/desktop",
+  "productName": "Hive Pro",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Hive Pro — jogue Hive com amigos hospedando no seu PC",
+  "author": "Hive Pro",
+  "main": "dist/main.cjs",
+  "scripts": {
+    "build": "node build.mjs",
+    "start": "npm run build && electron .",
+    "dist": "npm run build -w @hive/client --prefix ../.. && npm run build && electron-builder --win --publish never"
+  },
+  "devDependencies": {
+    "@hive/server": "*",
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8",
+    "esbuild": "^0.24.2"
+  },
+  "build": {
+    "appId": "pro.hive.desktop",
+    "productName": "Hive Pro",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "../client/dist",
+        "to": "client"
+      },
+      {
+        "from": "bin",
+        "to": "bin",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "shortcutName": "Hive Pro"
+    },
+    "electronVersion": "33.4.11",
+    "electronDist": "../../node_modules/electron/dist"
+  }
+}

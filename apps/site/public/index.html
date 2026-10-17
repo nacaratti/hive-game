@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#2a211b" />
+    <title>Hive Pro: jogue Hive com amigos no seu PC</title>
+    <meta
+      name="description"
+      content="Baixe o Hive Pro para Windows. Hospede partidas de Hive no seu computador: amigos entram pela rede de casa ou por um link. Também dá para jogar contra o computador."
+    />
+    <meta property="og:title" content="Hive Pro" />
+    <meta property="og:description" content="Jogue Hive com amigos, direto do seu computador. Sem cadastro e sem servidor." />
+    <meta property="og:image" content="/img/partida.png" />
+    <link rel="icon" type="image/svg+xml" href="/img/tile-Q.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,500..800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar wrap">
+      <a class="brand" href="/">
+        <img src="/img/tile-Q.svg" alt="" width="30" height="32" />
+        <span>Hive Pro</span>
+      </a>
+      <nav>
+        <a href="#como-jogar">Como jogar com amigos</a>
+        <a href="#duvidas">Dúvidas</a>
+        <a class="nav-download" href="/jogar/">Jogar agora</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero wrap" id="baixar">
+        <div class="hero-text">
+          <h1>Jogue Hive com seus amigos, direto do seu computador.</h1>
+          <p class="lead">
+            Você hospeda a partida no seu PC. Seus amigos entram pela rede de casa ou por um link que você manda. Sem cadastro, sem servidor e sem
+            mensalidade.
+          </p>
+          <div class="cta">
+            <a class="button" href="/jogar/">Jogar no navegador</a>
+            <a class="button button-secondary" href="https://github.com/nacaratti/hive-game/releases/latest/download/Hive-Pro-Setup.exe" data-download>Baixar para Windows</a>
+          </div>
+          <p class="cta-meta" data-version>Programa para Windows: versão 0.1.0, 79 MB, Windows 10 e 11</p>
+          <p class="cta-note">
+            No navegador, jogue contra o computador ou mande um link para um amigo jogar do aparelho dele, sem instalar nada. O programa para Windows
+            também hospeda partidas na sua rede de casa.
+          </p>
+        </div>
+        <figure class="hero-art">
+          <img src="/img/rosette.svg" alt="Rainha preta cercada por cinco peças, com a sexta casa livre" width="340" height="332" />
+          <figcaption>Falta uma casa para cercar a rainha.</figcaption>
+        </figure>
+      </section>
+
+      <section class="shot wrap" aria-label="Tela do jogo">
+        <img src="/img/partida.png" alt="Partida em andamento no Hive Pro: tabuleiro, peças de cada jogador, relógios e histórico de lances" width="1280" height="760" loading="lazy" />
+      </section>
+
+      <section class="steps wrap" id="como-jogar">
+        <h2>Como jogar com amigos</h2>
+        <ol>
+          <li>
+            <h3>Instale e abra</h3>
+            <p>Digite seu nome e entre no salão. A partir daí, o seu computador é o servidor da partida.</p>
+          </li>
+          <li>
+            <h3>Crie uma sala</h3>
+            <p>Escolha as expansões e o relógio. Se quiser, coloque uma senha.</p>
+          </li>
+          <li>
+            <h3>Chame quem vai jogar</h3>
+            <p>
+              Na mesma rede, sua sala aparece sozinha para quem tem o Hive Pro, ou a pessoa usa o QR code. De longe, clique em
+              <em>Compartilhar pela internet</em> e mande o link gerado. Não precisa mexer no roteador.
+            </p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="features wrap" aria-labelledby="recursos">
+        <h2 id="recursos">O que vem no jogo</h2>
+        <article>
+          <div class="tiles"><img src="/img/tile-M.svg" alt="" /><img src="/img/tile-L.svg" alt="" /><img src="/img/tile-P.svg" alt="" /></div>
+          <h3>Regras oficiais completas</h3>
+          <p>Jogo base com Mosquito, Joaninha e Tatuzinho. O jogo confere cada lance, então ninguém trapaceia.</p>
+        </article>
+        <article>
+          <div class="tiles"><img src="/img/tile-B.svg" alt="" /></div>
+          <h3>Contra o computador</h3>
+          <p>Três níveis, do fácil para aprender ao difícil que pensa vários lances à frente. Funciona sem internet.</p>
+        </article>
+        <article>
+          <div class="tiles"><img src="/img/tile-A.svg" alt="" /></div>
+          <h3>Partidas com relógio e revanche</h3>
+          <p>Salas com chat, quem quiser assiste, e se a conexão cair, você volta para a mesma partida.</p>
+        </article>
+        <article>
+          <div class="tiles"><img src="/img/tile-G.svg" alt="" /></div>
+          <h3>Reveja cada lance</h3>
+          <p>O histórico mostra a partida inteira. Volte a qualquer lance para entender onde a rainha ficou cercada.</p>
+        </article>
+      </section>
+
+      <section class="faq wrap" id="duvidas">
+        <h2>Dúvidas</h2>
+        <details>
+          <summary>O Windows mostrou "O Windows protegeu o computador". É seguro?</summary>
+          <p>
+            Esse aviso aparece em programas sem assinatura digital paga. Clique em <strong>Mais informações</strong> e depois em
+            <strong>Executar assim mesmo</strong>.
+          </p>
+        </details>
+        <details>
+          <summary>O Windows perguntou se o Hive Pro pode usar a rede.</summary>
+          <p>Permita em <strong>redes privadas</strong>. Sem isso, seus amigos não conseguem entrar nas partidas que você hospedar.</p>
+        </details>
+        <details>
+          <summary>Meus amigos precisam instalar?</summary>
+          <p>
+            Não. Quem entra na sua partida pode usar só o navegador, no computador ou no celular. Instalar é necessário para hospedar e para jogar
+            contra o computador sem internet.
+          </p>
+        </details>
+        <details>
+          <summary>Como funciona o link pela internet?</summary>
+          <p>
+            O Hive Pro abre um túnel gratuito da Cloudflare até o seu computador. Na primeira vez, ele baixa o programa oficial da Cloudflare (cerca de
+            60 MB). O link funciona enquanto o Hive Pro estiver aberto.
+          </p>
+        </details>
+        <details>
+          <summary>Quanto custa?</summary>
+          <p>Nada. Não há conta, anúncio nem assinatura.</p>
+        </details>
+        <details>
+          <summary>Funciona no Mac ou no Linux?</summary>
+          <p>Por enquanto o instalador é só para Windows. Quem usa Mac ou Linux pode entrar nas partidas pelo navegador.</p>
+        </details>
+      </section>
+
+      <section class="final wrap">
+        <h2>Pronto para cercar a rainha?</h2>
+        <div class="cta cta-center">
+          <a class="button" href="/jogar/">Jogar no navegador</a>
+          <a class="button button-secondary" href="https://github.com/nacaratti/hive-game/releases/latest/download/Hive-Pro-Setup.exe">Baixar para Windows</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="wrap">
+      <p>
+        Hive é um jogo de tabuleiro criado por John Yianni e publicado pela Gen42 Games. O Hive Pro é um projeto independente de fãs, sem afiliação
+        com a Gen42.
+      </p>
+    </footer>
+  </body>
+</html>

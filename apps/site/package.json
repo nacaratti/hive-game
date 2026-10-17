@@ -1,0 +1,12 @@
+{
+  "name": "@hive/site",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Página de download do Hive Pro (Vercel, site estático em public/)",
+  "scripts": {
+    "prepare-release": "node scripts/prepare.mjs",
+    "preview": "npx --yes serve public -l 4300",
+    "deploy": "npm run build-web && npm run prepare-release && npx --yes vercel@latest deploy --prod",
+    "build-web": "node scripts/build-web.mjs"
+  }
+}
