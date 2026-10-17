@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 const here = dirname(fileURLToPath(import.meta.url));
 const desktop = resolve(here, '../../desktop');
 const { version } = JSON.parse(readFileSync(resolve(desktop, 'package.json'), 'utf8'));
-const installer = resolve(desktop, `release/Hive Pro Setup ${version}.exe`);
+const installer = resolve(desktop, `release/Favo Setup ${version}.exe`);
 
 let size;
 try {

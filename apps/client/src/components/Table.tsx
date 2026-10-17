@@ -4,6 +4,7 @@ import { tapFeedback } from '../lib/mobile';
 import { playTock } from '../lib/sound';
 import { Board, type BoardHandle, type Selection } from './Board';
 import { Hand } from './Hand';
+import { RulesGuide } from './RulesGuide';
 import { TileIcon } from './Tile';
 
 interface TableProps {
@@ -26,6 +27,7 @@ export function Table({ game, controls, frozen, onMove, header, side, overlay, s
   const [selection, setSelection] = useState<Selection>(null);
   const [handDrag, setHandDrag] = useState<{ piece: number; x: number; y: number; moved: boolean } | null>(null);
   const [panelOpen, setPanelOpen] = useState(false);
+  const [showRules, setShowRules] = useState(false);
 
   const myTurn = !frozen && !game.isOver && controls.includes(game.turnColor);
   const legal = myTurn ? game.legalMoves() : [];
@@ -138,6 +140,13 @@ export function Table({ game, controls, frozen, onMove, header, side, overlay, s
             onMove={submit}
             lastMove={lastMove}
           />
+          <button
+            type="button"
+            onClick={() => setShowRules(true)}
+            className="absolute bottom-3 left-3 z-10 rounded-md border border-line bg-panel/90 px-3 py-1.5 text-sm text-ink hover:bg-panel-hi"
+          >
+            Como jogar
+          </button>
           {mustPass && (
             <div className="absolute inset-x-0 top-4 mx-auto flex w-fit items-center gap-3 rounded-lg border border-honey/60 bg-panel px-4 py-2 shadow-xl">
               <span>Nenhum lance possível.</span>
@@ -168,6 +177,7 @@ export function Table({ game, controls, frozen, onMove, header, side, overlay, s
       </div>
       <div className="md:hidden border-t border-line/60 bg-table-deep/40">{hand(bottomColor, 'horizontal')}</div>
 
+      {showRules && <RulesGuide onClose={() => setShowRules(false)} />}
       {handDrag?.moved && (
         <div className="pointer-events-none fixed z-50 -translate-x-1/2 -translate-y-1/2" style={{ left: handDrag.x, top: handDrag.y }}>
           <TileIcon bug={PIECES[handDrag.piece].bug} color={PIECES[handDrag.piece].color} size={60} />

@@ -17,10 +17,10 @@ const ALPHABET = 'abcdefghijkmnpqrstuvwxyz23456789';
 
 export const newPeerId = (): string => {
   const bytes = crypto.getRandomValues(new Uint8Array(10));
-  return 'hivepro-' + [...bytes].map((b) => ALPHABET[b % ALPHABET.length]).join('');
+  return 'favo-' + [...bytes].map((b) => ALPHABET[b % ALPHABET.length]).join('');
 };
 
-export const isPeerId = (id: string | null): id is string => !!id && /^hivepro-[a-z0-9]{6,20}$/.test(id);
+export const isPeerId = (id: string | null): id is string => !!id && /^favo-[a-z0-9]{6,20}$/.test(id);
 
 export class PeerError extends Error {
   constructor(readonly type: string) {

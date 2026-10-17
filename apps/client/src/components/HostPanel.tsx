@@ -89,7 +89,7 @@ export function HostPanel() {
 
       <section className="flex flex-col gap-2">
         <h3 className="font-bold">Na mesma rede (Wi-Fi ou cabo)</h3>
-        <p className="text-muted">Quem tem o Hive Pro vê sua sala na lista automaticamente. Pelo navegador ou celular, use:</p>
+        <p className="text-muted">Quem tem o Favo vê sua sala na lista automaticamente. Pelo navegador ou celular, use:</p>
         {lanUrl ? (
           <>
             <CopyRow value={lanUrl} />
@@ -106,7 +106,7 @@ export function HostPanel() {
         <h3 className="font-bold">Pela internet</h3>
         {t.status === 'on' ? (
           <>
-            <p className="text-muted">Envie este link. Ele funciona enquanto o Hive Pro estiver aberto.</p>
+            <p className="text-muted">Envie este link. Ele funciona enquanto o Favo estiver aberto.</p>
             <CopyRow value={t.url} />
             <div className="self-center">
               <QR text={t.url} size={130} />
@@ -127,7 +127,7 @@ export function HostPanel() {
         ) : t.status === 'missing' ? (
           <>
             <p className="text-muted">
-              Para jogar com quem está longe, o Hive Pro usa um túnel gratuito da Cloudflare. Ele precisa do programa oficial cloudflared (cerca de 60 MB), baixado
+              Para jogar com quem está longe, o Favo usa um túnel gratuito da Cloudflare. Ele precisa do programa oficial cloudflared (cerca de 60 MB), baixado
               do GitHub da Cloudflare.
             </p>
             {t.error && <p className="text-danger">{t.error}</p>}

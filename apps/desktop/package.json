@@ -1,10 +1,10 @@
 {
   "name": "@hive/desktop",
-  "productName": "Hive Pro",
-  "version": "0.1.0",
+  "productName": "Favo",
+  "version": "0.2.0",
   "private": true,
-  "description": "Hive Pro — jogue Hive com amigos hospedando no seu PC",
-  "author": "Hive Pro",
+  "description": "Favo: jogue com amigos hospedando a partida no seu PC",
+  "author": "Favo",
   "main": "dist/main.cjs",
   "scripts": {
     "build": "node build.mjs",
@@ -18,8 +18,8 @@
     "esbuild": "^0.24.2"
   },
   "build": {
-    "appId": "pro.hive.desktop",
-    "productName": "Hive Pro",
+    "appId": "app.favo.desktop",
+    "productName": "Favo",
     "directories": {
       "output": "release"
     },
@@ -47,7 +47,7 @@
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
-      "shortcutName": "Hive Pro"
+      "shortcutName": "Favo"
     },
     "electronVersion": "33.4.11",
     "electronDist": "../../node_modules/electron/dist"

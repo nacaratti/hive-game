@@ -4,13 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#2a211b" />
-    <title>Hive Pro: jogue Hive com amigos no seu PC</title>
+    <title>Favo: jogo de estratégia com insetos para jogar com amigos</title>
     <meta
       name="description"
-      content="Baixe o Hive Pro para Windows. Hospede partidas de Hive no seu computador: amigos entram pela rede de casa ou por um link. Também dá para jogar contra o computador."
+      content="Baixe o Favo para Windows. Hospede partidas no seu computador: amigos entram pela rede de casa ou por um link. Também dá para jogar contra o computador."
     />
-    <meta property="og:title" content="Hive Pro" />
-    <meta property="og:description" content="Jogue Hive com amigos, direto do seu computador. Sem cadastro e sem servidor." />
+    <meta property="og:title" content="Favo" />
+    <meta property="og:description" content="Jogue Favo com amigos, no navegador ou no seu computador. Sem cadastro e sem servidor." />
     <meta property="og:image" content="/img/partida.png" />
     <link rel="icon" type="image/svg+xml" href="/img/tile-Q.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -25,10 +25,11 @@
     <header class="topbar wrap">
       <a class="brand" href="/">
         <img src="/img/tile-Q.svg" alt="" width="30" height="32" />
-        <span>Hive Pro</span>
+        <span>Favo</span>
       </a>
       <nav>
-        <a href="#como-jogar">Como jogar com amigos</a>
+        <a href="/regras">Regras</a>
+        <a href="#como-jogar">Jogar com um amigo</a>
         <a href="#duvidas">Dúvidas</a>
         <a class="nav-download" href="/jogar/">Jogar agora</a>
       </nav>
@@ -37,16 +38,16 @@
     <main>
       <section class="hero wrap" id="baixar">
         <div class="hero-text">
-          <h1>Jogue Hive com seus amigos, direto do seu computador.</h1>
+          <h1>Jogue Favo com seus amigos, direto do seu computador.</h1>
           <p class="lead">
             Você hospeda a partida no seu PC. Seus amigos entram pela rede de casa ou por um link que você manda. Sem cadastro, sem servidor e sem
             mensalidade.
           </p>
           <div class="cta">
             <a class="button" href="/jogar/">Jogar no navegador</a>
-            <a class="button button-secondary" href="https://github.com/nacaratti/hive-game/releases/latest/download/Hive-Pro-Setup.exe" data-download>Baixar para Windows</a>
+            <a class="button button-secondary" href="https://github.com/nacaratti/hive-game/releases/latest/download/Favo-Setup.exe" data-download>Baixar para Windows</a>
           </div>
-          <p class="cta-meta" data-version>Programa para Windows: versão 0.1.0, 79 MB, Windows 10 e 11</p>
+          <p class="cta-meta" data-version>Programa para Windows: versão 0.2.0, 79 MB, Windows 10 e 11</p>
           <p class="cta-note">
             No navegador, jogue contra o computador ou mande um link para um amigo jogar do aparelho dele, sem instalar nada. O programa para Windows
             também hospeda partidas na sua rede de casa.
@@ -59,28 +60,28 @@
       </section>
 
       <section class="shot wrap" aria-label="Tela do jogo">
-        <img src="/img/partida.png" alt="Partida em andamento no Hive Pro: tabuleiro, peças de cada jogador, relógios e histórico de lances" width="1280" height="760" loading="lazy" />
+        <img src="/img/partida.png" alt="Partida em andamento no Favo: tabuleiro, peças de cada jogador, relógios e histórico de lances" width="1280" height="760" loading="lazy" />
       </section>
 
       <section class="steps wrap" id="como-jogar">
-        <h2>Como jogar com amigos</h2>
+        <h2>Como jogar com um amigo</h2>
         <ol>
           <li>
-            <h3>Instale e abra</h3>
-            <p>Digite seu nome e entre no salão. A partir daí, o seu computador é o servidor da partida.</p>
+            <h3>Abra o jogo</h3>
+            <p>Clique em <a href="/jogar/">Jogar no navegador</a>. Funciona no computador, no tablet e no celular, sem instalar nada.</p>
           </li>
           <li>
-            <h3>Crie uma sala</h3>
-            <p>Escolha as expansões e o relógio. Se quiser, coloque uma senha.</p>
+            <h3>Crie a partida</h3>
+            <p>Toque em <em>Criar partida e copiar link</em>, escolha as expansões e com qual cor você quer jogar.</p>
           </li>
           <li>
-            <h3>Chame quem vai jogar</h3>
-            <p>
-              Na mesma rede, sua sala aparece sozinha para quem tem o Hive Pro, ou a pessoa usa o QR code. De longe, clique em
-              <em>Compartilhar pela internet</em> e mande o link gerado. Não precisa mexer no roteador.
-            </p>
+            <h3>Mande o link</h3>
+            <p>Envie o link ou mostre o QR code. Seu amigo abre, digita o nome e a partida começa, cada um no seu aparelho. Deixe a página aberta até o fim.</p>
           </li>
         </ol>
+        <p class="steps-note">
+          Primeira vez? Veja <a href="/regras">como cada peça anda</a> ou treine contra o computador, em três níveis de dificuldade.
+        </p>
       </section>
 
       <section class="features wrap" aria-labelledby="recursos">
@@ -117,7 +118,7 @@
           </p>
         </details>
         <details>
-          <summary>O Windows perguntou se o Hive Pro pode usar a rede.</summary>
+          <summary>O Windows perguntou se o Favo pode usar a rede.</summary>
           <p>Permita em <strong>redes privadas</strong>. Sem isso, seus amigos não conseguem entrar nas partidas que você hospedar.</p>
         </details>
         <details>
@@ -130,8 +131,8 @@
         <details>
           <summary>Como funciona o link pela internet?</summary>
           <p>
-            O Hive Pro abre um túnel gratuito da Cloudflare até o seu computador. Na primeira vez, ele baixa o programa oficial da Cloudflare (cerca de
-            60 MB). O link funciona enquanto o Hive Pro estiver aberto.
+            O Favo abre um túnel gratuito da Cloudflare até o seu computador. Na primeira vez, ele baixa o programa oficial da Cloudflare (cerca de
+            60 MB). O link funciona enquanto o Favo estiver aberto.
           </p>
         </details>
         <details>
@@ -148,15 +149,14 @@
         <h2>Pronto para cercar a rainha?</h2>
         <div class="cta cta-center">
           <a class="button" href="/jogar/">Jogar no navegador</a>
-          <a class="button button-secondary" href="https://github.com/nacaratti/hive-game/releases/latest/download/Hive-Pro-Setup.exe">Baixar para Windows</a>
+          <a class="button button-secondary" href="https://github.com/nacaratti/hive-game/releases/latest/download/Favo-Setup.exe">Baixar para Windows</a>
         </div>
       </section>
     </main>
 
     <footer class="wrap">
       <p>
-        Hive é um jogo de tabuleiro criado por John Yianni e publicado pela Gen42 Games. O Hive Pro é um projeto independente de fãs, sem afiliação
-        com a Gen42.
+        O Favo é inspirado no jogo de tabuleiro Hive, criado por John Yianni e publicado pela Gen42 Games. É um projeto independente de fãs, sem afiliação com a Gen42.
       </p>
     </footer>
   </body>

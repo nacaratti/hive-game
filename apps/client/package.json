@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "export-art": "tsx scripts/export-art.tsx"
   },
   "dependencies": {
     "@capacitor-mlkit/barcode-scanning": "^7.5.0",

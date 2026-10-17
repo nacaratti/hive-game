@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Hive Pro</string>
-    <string name="title_activity_main">Hive Pro</string>
+    <string name="app_name">Favo</string>
+    <string name="title_activity_main">Favo</string>
     <string name="package_name">dev.hivepro.app</string>
     <string name="custom_url_scheme">dev.hivepro.app</string>
 </resources>

@@ -2,7 +2,7 @@ import { resolve } from 'node:path';
 import { DEFAULT_PORT, announce, lanAddresses, startServer } from './index';
 
 const port = Number(process.env.PORT ?? DEFAULT_PORT);
-const serverName = process.env.SERVER_NAME ?? 'Hive Pro';
+const serverName = process.env.SERVER_NAME ?? 'Favo';
 const server = await startServer({
   port,
   clientDir: process.env.CLIENT_DIR ?? resolve(import.meta.dirname, '../../client/dist'),
@@ -15,7 +15,7 @@ const beacon = announce(() => {
 });
 
 console.log(`
-  Hive Pro servidor rodando na porta ${server.port}`);
+  Favo: servidor rodando na porta ${server.port}`);
 console.log(`  Neste PC:      http://localhost:${server.port}`);
 for (const ip of lanAddresses()) console.log(`  Na rede local: http://${ip}:${server.port}`);
 console.log('');

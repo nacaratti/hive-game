@@ -62,7 +62,7 @@ export function Welcome() {
         <section className="flex min-w-0 flex-col items-center gap-6 text-center lg:items-start lg:text-left">
           <Rosette />
           <div>
-            <h1 className="font-display text-6xl font-extrabold leading-none tracking-tight lg:text-7xl">Hive</h1>
+            <h1 className="font-display text-6xl font-extrabold leading-none tracking-tight lg:text-7xl">Favo</h1>
             <p className="mt-3 max-w-md text-balance text-lg text-muted">Cerque a rainha adversária antes que cerquem a sua.</p>
           </div>
         </section>

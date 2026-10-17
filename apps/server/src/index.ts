@@ -56,7 +56,7 @@ export async function startServer(opts: ServerOptions = {}): Promise<RunningServ
   });
 
   const hub = new Hub(io, {
-    serverName: opts.serverName ?? 'Hive Pro',
+    serverName: opts.serverName ?? 'Favo',
     version: opts.version ?? '0.1.0',
     abandonMs: opts.abandonMs,
     botWorker: opts.botWorker ?? (here ? resolve(here, 'bot-worker.dev.mjs') : undefined),

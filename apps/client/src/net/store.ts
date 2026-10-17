@@ -87,7 +87,7 @@ const readRecent = (): RecentServer[] => {
   }
 };
 
-/** Checks that a Hive Pro server answers at `origin` and speaks our protocol. */
+/** Checks that a Favo server answers at `origin` and speaks our protocol. */
 async function probe(origin: string): Promise<{ ok: true; info: ServerInfo } | { ok: false; error: string }> {
   try {
     const res = await fetch(`${origin}/api/info`, { signal: AbortSignal.timeout(6000) });

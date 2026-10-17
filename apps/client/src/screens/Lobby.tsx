@@ -60,7 +60,7 @@ export function Lobby() {
       <header className="mb-6 flex items-center gap-3">
         <TileIcon bug="Q" color={0} size={38} />
         <div className="min-w-0 flex-1">
-          <h1 className="font-display text-2xl font-bold">{server?.name ?? 'Hive'}</h1>
+          <h1 className="font-display text-2xl font-bold">{server?.name ?? 'Favo'}</h1>
           <p className="text-sm text-muted">
             Você entrou como <span className="text-ink">{name}</span>
           </p>

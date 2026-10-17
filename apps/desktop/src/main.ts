@@ -26,7 +26,7 @@ const hostInfo = (): HostInfo => ({
 const lanList = (): LanServerInfo[] => (lan?.list() ?? []).map(({ id, name, url, rooms, players }) => ({ id, name, url, rooms, players }));
 
 async function boot(): Promise<void> {
-  const serverName = `Servidor de ${process.env.USERNAME ?? process.env.USER ?? 'Hive'}`;
+  const serverName = `Servidor de ${process.env.USERNAME ?? process.env.USER ?? 'Favo'}`;
   const opts = {
     clientDir,
     dataDir: join(app.getPath('userData'), 'data'),
@@ -59,7 +59,7 @@ function createWindow(): void {
     minWidth: 900,
     minHeight: 600,
     backgroundColor: '#2a211b',
-    title: 'Hive Pro',
+    title: 'Favo',
     autoHideMenuBar: true,
     icon: join(resources, 'build', 'icon.png'),
     webPreferences: {
@@ -107,7 +107,7 @@ ipcMain.handle('server:open', async (_e, address: unknown) => {
     const info = (await res.json()) as { protocol?: number };
     if (info.protocol !== PROTOCOL_VERSION) return { ok: false, error: 'Esse servidor usa outra versão do jogo.' };
   } catch {
-    return { ok: false, error: 'Nenhum servidor Hive Pro respondeu nesse endereço.' };
+    return { ok: false, error: 'Nenhum servidor do Favo respondeu nesse endereço.' };
   }
   await win?.loadURL(target.origin + (target.room ? `/?sala=${encodeURIComponent(target.room)}` : ''));
   return { ok: true };

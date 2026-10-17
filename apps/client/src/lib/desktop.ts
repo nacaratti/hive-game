@@ -8,7 +8,7 @@ declare global {
   }
 }
 
-/** Present only inside the Hive Pro desktop app. */
+/** Present only inside the Favo desktop app. */
 export const desktop: HiveDesktopBridge | undefined = typeof window !== 'undefined' ? window.hiveDesktop : undefined;
 
 /** This computer's hosting info (LAN addresses, internet tunnel), when running the desktop app at home. */
@@ -22,7 +22,7 @@ export function useHostInfo(): HostInfo | null {
   return info;
 }
 
-/** Other Hive Pro hosts announcing themselves on the local network. */
+/** Other Favo hosts announcing themselves on the local network. */
 export function useLanServers(): LanServerInfo[] {
   const [list, setList] = useState<LanServerInfo[]>([]);
   useEffect(() => {

@@ -328,7 +328,7 @@ function GuestView({ hostId }: { hostId: string }) {
   const guestId = useMemo(() => {
     let id = store.get(GUEST_KEY);
     if (!id) {
-      id = newPeerId().replace('hivepro-', 'g-');
+      id = newPeerId().replace('favo-', 'g-');
       store.set(GUEST_KEY, id);
     }
     return id;

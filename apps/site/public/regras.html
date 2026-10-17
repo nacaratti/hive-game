@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#2a211b" />
+    <title>Regras do Favo: como cada peça anda</title>
+    <meta name="description" content="Regras do Favo explicadas com desenhos: como cada peça anda, como colocar peças e como vencer cercando a abelha-rainha." />
+    <meta property="og:title" content="Favo" />
+    <meta property="og:description" content="Jogue Favo com amigos, no navegador ou no seu computador. Sem cadastro e sem servidor." />
+    <meta property="og:image" content="/img/partida.png" />
+    <link rel="icon" type="image/svg+xml" href="/img/tile-Q.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,500..800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar wrap">
+      <a class="brand" href="/">
+        <img src="/img/tile-Q.svg" alt="" width="30" height="32" />
+        <span>Favo</span>
+      </a>
+      <nav>
+        <a href="/regras" aria-current="page">Regras</a>
+        <a href="/#como-jogar">Jogar com um amigo</a>
+        <a href="/#duvidas">Dúvidas</a>
+        <a class="nav-download" href="/jogar/">Jogar agora</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- regras:inicio -->
+      <section class="rules wrap" id="regras">
+        <h1 class="rules-title">Regras do Favo</h1>
+        <p class="lead">Vence quem cercar primeiro a Abelha-Rainha do adversário. Nos desenhos, a peça com contorno claro é a que se move e os hexágonos dourados mostram para onde ela pode ir. As posições são reais: foram calculadas pelo próprio jogo.</p>
+        <h3 class="group">Como cada peça anda</h3>
+        <div class="rule-grid">
+          <article class="rule">
+            <img class="art" src="/img/regras/Q.svg" alt="Exemplo: Abelha-Rainha" loading="lazy" />
+            <div>
+              <h4><img src="/img/tile-Q.svg" alt="" />Abelha-Rainha</h4>
+              <p>Anda uma casa por vez, deslizando.</p>
+            </div>
+          </article>
+          <article class="rule">
+            <img class="art" src="/img/regras/B.svg" alt="Exemplo: Besouro" loading="lazy" />
+            <div>
+              <h4><img src="/img/tile-B.svg" alt="" />Besouro</h4>
+              <p>Anda uma casa, mas pode subir em cima de outras peças e andar por cima da colmeia. A peça coberta fica presa até o besouro sair.</p>
+            </div>
+          </article>
+          <article class="rule">
+            <img class="art" src="/img/regras/G.svg" alt="Exemplo: Gafanhoto" loading="lazy" />
+            <div>
+              <h4><img src="/img/tile-G.svg" alt="" />Gafanhoto</h4>
+              <p>Pula em linha reta por cima de uma ou mais peças até a primeira casa vazia. Como não desliza, passa por aberturas estreitas.</p>
+            </div>
+          </article>
+          <article class="rule">
+            <img class="art" src="/img/regras/S.svg" alt="Exemplo: Aranha" loading="lazy" />
+            <div>
+              <h4><img src="/img/tile-S.svg" alt="" />Aranha</h4>
+              <p>Anda exatamente três casas, deslizando em volta da colmeia, sem voltar pelo caminho.</p>
+            </div>
+          </article>
+          <article class="rule">
+            <img class="art" src="/img/regras/A.svg" alt="Exemplo: Formiga" loading="lazy" />
+            <div>
+              <h4><img src="/img/tile-A.svg" alt="" />Formiga</h4>
+              <p>Desliza quantas casas quiser em volta da colmeia. Só não entra em buracos fechados.</p>
+            </div>
+          </article>
+          <article class="rule">
+            <img class="art" src="/img/regras/M.svg" alt="Exemplo: Mosquito" loading="lazy" />
+            <div>
+              <h4><img src="/img/tile-M.svg" alt="" />Mosquito <span class="badge">expansão</span></h4>
+              <p>Copia o movimento de qualquer peça que esteja encostando nele. Aqui, ao lado do gafanhoto, ele pula. Em cima da colmeia, anda como besouro.</p>
+            </div>
+          </article>
+          <article class="rule">
+            <img class="art" src="/img/regras/L.svg" alt="Exemplo: Joaninha" loading="lazy" />
+            <div>
+              <h4><img src="/img/tile-L.svg" alt="" />Joaninha <span class="badge">expansão</span></h4>
+              <p>Anda três casas: duas por cima da colmeia e a última descendo para uma casa vazia.</p>
+            </div>
+          </article>
+          <article class="rule">
+            <img class="art" src="/img/regras/P.svg" alt="Exemplo: Tatuzinho" loading="lazy" />
+            <div>
+              <h4><img src="/img/tile-P.svg" alt="" />Tatuzinho <span class="badge">expansão</span></h4>
+              <p>Anda como a rainha. Ou, em vez de andar, levanta uma peça vizinha de qualquer cor e a coloca em outra casa vazia ao seu lado. Não pode pegar a peça que o adversário acabou de mover.</p>
+            </div>
+          </article>
+        </div>
+        <h3 class="group">Regras básicas</h3>
+        <div class="rule-grid">
+          <article class="rule">
+            <img class="art" src="/img/regras/objetivo.svg" alt="Exemplo: Objetivo" loading="lazy" />
+            <div>
+              <h4>Objetivo</h4>
+              <p>Cerque a Abelha-Rainha do adversário pelos seis lados, com peças de qualquer cor. Se as duas rainhas ficarem cercadas no mesmo lance, é empate.</p>
+            </div>
+          </article>
+          <article class="rule">
+            <img class="art" src="/img/regras/colocar.svg" alt="Exemplo: Colocar peças" loading="lazy" />
+            <div>
+              <h4>Colocar peças</h4>
+              <p>Na sua vez, coloque uma peça nova ou mova uma que já está no jogo. Peças novas só podem encostar nas suas, nunca nas do adversário. Só a primeira peça de cada um foge a essa regra.</p>
+            </div>
+          </article>
+          <article class="rule no-art">
+            <div>
+              <h4>A Abelha-Rainha</h4>
+              <p>Ela precisa entrar no jogo até o seu 4º turno, e nenhuma peça sua pode se mover antes disso. No primeiro turno ela não pode ser colocada (regra de torneio).</p>
+            </div>
+          </article>
+          <article class="rule">
+            <img class="art" src="/img/regras/colmeia.svg" alt="Exemplo: Uma colmeia só" loading="lazy" />
+            <div>
+              <h4>Uma colmeia só</h4>
+              <p>As peças precisam formar sempre um único grupo. Uma peça não pode sair se isso dividir a colmeia em duas, nem por um instante.</p>
+            </div>
+          </article>
+          <article class="rule">
+            <img class="art" src="/img/regras/deslizar.svg" alt="Exemplo: Deslizar" loading="lazy" />
+            <div>
+              <h4>Deslizar</h4>
+              <p>Quem anda pelo chão desliza: não passa por uma abertura estreita entre duas peças e nunca se afasta da colmeia. Aqui a rainha não consegue entrar no buraco.</p>
+            </div>
+          </article>
+          <article class="rule no-art">
+            <div>
+              <h4>Sem lance possível</h4>
+              <p>Se você não tiver nenhuma peça para colocar nem para mover, passa a vez.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+      <!-- regras:fim -->
+
+      <section class="final wrap">
+        <h2>Pronto para cercar a rainha?</h2>
+        <div class="cta cta-center">
+          <a class="button" href="/jogar/">Jogar no navegador</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="wrap">
+      <p>
+        O Favo é inspirado no jogo de tabuleiro Hive, criado por John Yianni e publicado pela Gen42 Games. É um projeto independente de fãs, sem afiliação com a Gen42.
+      </p>
+    </footer>
+  </body>
+</html>
